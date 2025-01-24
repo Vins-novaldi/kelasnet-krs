@@ -16,7 +16,7 @@ $data = mysqli_fetch_array($dataResult);
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>KRS</title>
     <link rel="stylesheet" href="../css/jadwal-kelas.css" />
-    <link rel="stylesheet" href="../../fontawesome/css/all.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </head>
   <body>

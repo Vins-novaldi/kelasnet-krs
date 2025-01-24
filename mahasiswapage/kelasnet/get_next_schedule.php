@@ -14,18 +14,11 @@ if (!isset($_GET['id_ruangan']) || empty($_GET['id_ruangan'])) {
 
 $id_ruangan = $_GET['id_ruangan'];
 date_default_timezone_set('Asia/Jakarta'); 
-$currentDateTime = date('Y-m-d H:i');
-
-
-
-$customTimestamp = strtotime('2025-01-14 15:00:00'); // Waktu spesifik
-$customTime = date('H:i:s', $customTimestamp); // Formatkan waktu
-$customDay = date('l', $customTimestamp); // Formatkan hari
+$currentDateTime = date('Y-m-d H:i:s'); // Waktu sekarang dalam format lengkap
 
 try {
-    // Query jadwal berikutnya
-    $stmt = $con->prepare("
-        SELECT jadwal_mulai 
+    // Query jadwal berikutnya secara real-time
+    $stmt = $con->prepare("SELECT jadwal_mulai 
         FROM Kelas 
         WHERE id_ruangan = ? AND jadwal_mulai > ? 
         
@@ -41,7 +34,7 @@ try {
     ");
 
     // Bind parameter ke query
-    $stmt->bind_param("ssss", $id_ruangan, $customDay, $id_ruangan, $customTime);
+    $stmt->bind_param("ssss", $id_ruangan, $currentDateTime, $id_ruangan, $currentDateTime);
     $stmt->execute();
     $stmt->bind_result($nextJadwalMulai);
     $stmt->fetch();
@@ -60,6 +53,8 @@ try {
 
             echo json_encode([
                 'success' => true,
+                'message' => "Jadwal berikutnya ditemukan.",
+                'next_schedule' => $nextJadwalMulai,
                 'hours' => $hours,
                 'minutes' => $minutes,
                 'seconds' => $seconds
