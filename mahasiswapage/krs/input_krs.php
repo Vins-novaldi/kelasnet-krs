@@ -50,9 +50,10 @@ $result = mysqli_query($con, $query);
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KRS input</title>
+        <link rel="stylesheet" href="../css/inkrs.css" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
@@ -81,7 +82,7 @@ $result = mysqli_query($con, $query);
                 <td><?php echo date('H:i', strtotime($row['jadwal_mulai'])) . " - " . date('H:i', strtotime($row['jadwal_selesai'])); ?></td>
                 <td>
                     <?= htmlspecialchars($row['kode_mata_kuliah']) . ' ~ ' . htmlspecialchars($row['nama_mata_kuliah']); ?><br>
-                    <span class="badge gray"><?= htmlspecialchars($row['semester']); ?><?= htmlspecialchars($row['nomor_kelas']); ?></span>
+                    <span class="badge "><?= htmlspecialchars($row['semester']); ?><?= htmlspecialchars($row['nomor_kelas']); ?></span>
                     <span class="badge gray">Semester: <?= htmlspecialchars($row['semester']); ?></span>
                     <span class="badge gray">Kuota: <?= htmlspecialchars($row['kapasitas_kelas']); ?></span>
                     <span class="badge green">Peserta: <?= htmlspecialchars($row['peserta']); ?></span>

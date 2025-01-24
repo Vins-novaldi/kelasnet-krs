@@ -2,40 +2,6 @@
     require "../../sesion.php";
     require "../../koneksi.php";
 
-$customTimestamp = strtotime('2025-01-14 15:00:00'); // Waktu spesifik
-$customTime = date('H:i:s', $customTimestamp); // Formatkan waktu
-$customDay = date('l', $customTimestamp); // Formatkan hari
-
-
-
-    $sql = "SELECT r.id_ruangan, r.nama_ruangan, r.lokasi, 
-           m.nama_mata_kuliah, m.semester, d.nama AS nama_dosen, 
-           k.jadwal_mulai, k.jadwal_selesai, k.nomor_kelas,
-           lp.alasan AS alasan_pindah, lp.waktu_pindah AS waktu_pindah, lp.jadwal_selesai_baru
-    FROM Ruangan r
-    LEFT JOIN Kelas k 
-        ON r.id_ruangan = k.id_ruangan 
-        AND ('$customTime' BETWEEN k.jadwal_mulai AND k.jadwal_selesai)
-        AND (' $currentDay' = k.hari)
-    LEFT JOIN Mata_Kuliah m 
-        ON k.id_mata_kuliah = m.id_mata_kuliah
-    LEFT JOIN Dosen d 
-        ON k.id_dosen = d.id_dosen 
-    LEFT JOIN Log_Pindah_Ruangan lp
-        ON lp.id_ruangan_baru = r.id_ruangan
-        AND lp.jadwal_selesai_baru > '$customTimestamp'
-    ORDER BY r.nama_ruangan";
-
-
-    $query = mysqli_query($con, $sql);
-
-    if (!$query) {
-        echo json_encode([
-            'success' => false,
-            'message' => "Query gagal dijalankan: " . mysqli_error($con)
-        ]);
-        exit; 
-    }
 
     $id_mahasiswa = $_SESSION['id_mahasiswa'];
 $dataResult = mysqli_query($con, "SELECT nama_mahasiswa, nim, jurusan FROM mahasiswa WHERE id_mahasiswa = '$id_mahasiswa'");

@@ -87,7 +87,7 @@ mysqli_close($con);
             </div>
             <div class="item">
                 <i class="fa-solid fa-table-list"></i>
-                <a href="#">Jadwal Kuliah</a>
+                <a href="../krs/jadwal-kelas.php">Jadwal Kuliah</a>
             </div>
             <div class="item-4">
                 <div class="menu-item" onclick="toggleDropdown()">

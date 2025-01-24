@@ -56,7 +56,7 @@
               <span class="arrow">▼</span>
             </div>
           </div>
-          <div class=" dropdown" id="dropdown">
+          <div class="dropdown" id="dropdown">
             <a href="../kelasnet/ks.php">filter</a>
           </div>
         </div>

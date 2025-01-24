@@ -67,8 +67,7 @@ $data = mysqli_fetch_array($dataResult);
         <h1>Jadwal Kuliah</h1>
         <div class="card">
           <div
-            style="
-              display: flex;
+            style="display: flex;
               justify-content: space-between;
               align-items: center;
             "
@@ -231,7 +230,8 @@ $data = mysqli_fetch_array($dataResult);
         sidebar.classList.toggle("hidden");
         content.classList.toggle("expanded");
       }
-
+    </script>
+    <script>
       function toggleDropdown() {
         const dropdown = document.getElementById("dropdown");
         if (dropdown.style.display === "block") {
