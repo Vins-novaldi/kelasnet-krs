@@ -194,7 +194,7 @@ $data = mysqli_fetch_array($dataResult);
                       d.nama AS nama_dosen
                   FROM krs 
                   LEFT JOIN Log_Pindah_Ruangan lpr ON krs.id_kelas = lpr.id_kelas
-                  LEFT JOIN Ruangan r ON lpr.id_ruangan_baru = r.id_ruangan
+                  LEFT JOIN ruangan r ON lpr.id_ruangan_baru = r.id_ruangan
                   LEFT JOIN Kelas k ON krs.id_kelas = k.id_kelas
                   LEFT JOIN Mata_Kuliah m ON k.id_mata_kuliah = m.id_mata_kuliah
                   LEFT JOIN Mahasiswa mh ON krs.id_mahasiswa = mh.id_mahasiswa

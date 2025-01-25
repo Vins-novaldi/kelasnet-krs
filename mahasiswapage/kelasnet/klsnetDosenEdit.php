@@ -20,7 +20,7 @@ $sql = mysqli_query($con, "SELECT
         k.jadwal_selesai,
         k.nomor_kelas,
         k.hari
-    FROM Ruangan r
+    FROM ruangan r
     LEFT JOIN Kelas k ON r.id_ruangan = k.id_ruangan
     LEFT JOIN Mata_Kuliah m ON k.id_mata_kuliah = m.id_mata_kuliah
     LEFT JOIN Dosen d ON k.id_dosen = d.id_dosen
