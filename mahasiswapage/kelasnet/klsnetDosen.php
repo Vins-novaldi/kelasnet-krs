@@ -15,9 +15,9 @@
             k.nomor_kelas,
             k.hari
         FROM ruangan r
-        LEFT JOIN Kelas k ON r.id_ruangan = k.id_ruangan
-        LEFT JOIN Mata_Kuliah m ON k.id_mata_kuliah = m.id_mata_kuliah
-        LEFT JOIN Dosen d ON k.id_dosen = d.id_dosen
+        LEFT JOIN kelas k ON r.id_ruangan = k.id_ruangan
+        LEFT JOIN mata_kuliah m ON k.id_mata_kuliah = m.id_mata_kuliah
+        LEFT JOIN dosen d ON k.id_dosen = d.id_dosen
         WHERE k.id_dosen = '$id_dosen'
         ORDER BY r.nama_ruangan";
     $query = mysqli_query($con, $sql);
@@ -149,10 +149,10 @@
                                 k.nomor_kelas,
                                 k.hari
                             FROM ruangan r
-                            LEFT JOIN Log_Pindah_Ruangan lpr ON r.id_ruangan = lpr.id_ruangan_baru
-                            LEFT JOIN Kelas k ON k.id_kelas = lpr.id_kelas
-                            LEFT JOIN Mata_Kuliah m ON k.id_mata_kuliah = m.id_mata_kuliah
-                            LEFT JOIN Dosen d ON k.id_dosen = d.id_dosen
+                            LEFT JOIN log_pindah_ruangan lpr ON r.id_ruangan = lpr.id_ruangan_baru
+                            LEFT JOIN kelas k ON k.id_kelas = lpr.id_kelas
+                            LEFT JOIN mata_kuliah m ON k.id_mata_kuliah = m.id_mata_kuliah
+                            LEFT JOIN dosen d ON k.id_dosen = d.id_dosen
                             WHERE k.id_dosen = '$id_dosen' AND lpr.status = 'valid'
                             ORDER BY r.nama_ruangan;";
                             $queryRuanganBaru = mysqli_query($con, $sqlRuanganBaru);
