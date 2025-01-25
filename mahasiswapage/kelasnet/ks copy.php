@@ -56,7 +56,7 @@ mysqli_close($con);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Informasi Ruangan</title>
-    <link rel="stylesheet" href="../css/ks.css" />
+    <link rel="stylesheet" href="../css/kelasn.css" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
@@ -147,55 +147,48 @@ mysqli_close($con);
             <main class="main-content">
                 <h1>Status Ruangan</h1>
                 <div class="ruangan-status">
-                    <table>
-                        <thead>
-                            <tr class="head-ruangan">
-                                <th>Ruangan</th>
-                                <th>Matakuliah</th>
-                                <th>Nama Dosen</th>
-                                <th>Jadwal</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php 
-                            if ($isFilterUsed && mysqli_num_rows($query) > 0) {
-                                while ($data = mysqli_fetch_array($query)) { ?>
-                                <tr id="ruangan-<?= $data['id_ruangan'] ?>" data-id="<?= $data['id_ruangan'] ?>">
-                                    <td><?= htmlspecialchars($data['nama_ruangan']) ?> (<?= htmlspecialchars($data['lokasi']) ?>)</td>
-                                    <td>
-                                        <?php if ($data['nama_mata_kuliah']) { ?>
-                                            <?= htmlspecialchars($data['nama_mata_kuliah']) ?> - <?= htmlspecialchars($data['semester']) . htmlspecialchars($data['nomor_kelas']) ?>
-                                        <?php } else { ?>
-                                            Ruangan Kosong
-                                        <?php } ?>
-                                    </td>
-                                    <td>
-                                        <?= $data['nama_mata_kuliah'] ? htmlspecialchars($data['nama_dosen']) : '-' ?>
-                                    </td>
-                                    <td>
-                                        <?php if ($data['nama_mata_kuliah']) { ?>
-                                            <?= htmlspecialchars($data['hari']) . ", " . date('H:i:s', strtotime($data['jadwal_mulai'])) . " - " . date('H:i:s', strtotime($data['jadwal_selesai'])) ?>
-                                        <?php } else { ?>
-                                            -
-                                        <?php } ?>
-                                    </td>
-                                    
-                                </tr>
-                            <?php }
-                            } elseif ($isFilterUsed) { ?>
-                                <tr>
-                                    <td colspan="5">Tidak ada data yang ditemukan untuk filter yang dipilih.</td>
-                                </tr>
-                            <?php } else { ?>
-                                <tr>
-                                    <td colspan="5">Silakan terapkan filter untuk melihat status ruangan.</td>
-                                </tr>
-                            <?php } ?>
-                        </tbody>
-                    </table>
+                    <div class="head-ruangan">
+                        <h2>Ruangan</h2>
+                        <div class="head-info">
+                            <p>Matakuliah</p>
+                            <p>Nama Dosen</p>
+                            <p>Jadwal</p>
+                        </div>
+                        <p class="note2">note</p>
+                    </div>
+                    <?php 
+                    if ($isFilterUsed && mysqli_num_rows($query) > 0) {
+                        while ($data = mysqli_fetch_array($query)) { ?>
+                        <div class="ruangan" id="ruangan-<?= $data['id_ruangan'] ?>" data-id="<?= $data['id_ruangan'] ?>">
+                            <p class="note <?= $data['nama_mata_kuliah'] ? 'ruangan-ada-jadwal' : 'ruangan-kosong' ?>"></p>
+                            <h2><?= htmlspecialchars($data['nama_ruangan']) ?> (<?= htmlspecialchars($data['lokasi']) ?>)</h2>
+                            <div class="info">
+                                <?php 
+                                if ($data['nama_mata_kuliah']) { ?>
+                                    <p> <?= htmlspecialchars($data['nama_mata_kuliah']) ?> - <?= htmlspecialchars($data['semester']) . htmlspecialchars($data['nomor_kelas']) ?></p>
+                                    <p><?= htmlspecialchars($data['nama_dosen']) ?></p>
+                                    <p><?= htmlspecialchars($data['hari']) . ", " . date('H:i:s', strtotime($data['jadwal_mulai'])) . " - " . date('H:i:s', strtotime($data['jadwal_selesai'])) ?></p>
+                                    <?php 
+                                } else { ?>
+                                    <p> Ruangan Kosong</p>
+                                    <?php 
+                                } ?>
+                            </div>
+                            <p class="note2 <?= $data['nama_mata_kuliah'] ? 'ruangan-ada-jadwal' : 'ruangan-kosong' ?>"></p>
+                        </div>
+                    <?php }
+                  } 
+                  elseif ($isFilterUsed) {
+                    echo "<p>Tidak ada data yang ditemukan untuk filter yang dipilih.</p>";
+                  } 
+                 else {
+                    echo "<p>Silakan terapkan filter untuk melihat status ruangan.</p>";
+                 }
+
+                    
+                 ?>
                 </div>
             </main>
-
         </div>
     </div>
     <script src="../js/main.js"></script>

@@ -27,7 +27,7 @@ mysqli_close($con);
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
-    <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
+    <button class="toggle-btn" id="toggleButton">☰</button>
     <div class="header">
       <div class="header-box">
         <div class="p-name">
@@ -37,8 +37,7 @@ mysqli_close($con);
           <h1>SIAM</h1>
         </div>
         <div class="logout">
-          <i class="fa-solid fa-right-from-bracket"></i>
-          <a class="logout" href="../logout.php">LOGOUT</a>
+          <a class="logout" href="logout.php"><i class="fa-solid fa-right-from-bracket"></i> <span>logout</span></a>
         </div>
       </div>
     </div>
@@ -77,11 +76,13 @@ mysqli_close($con);
         <div class="content" id="content">
             <div class="filter-container">
                 <h2>pilih gedung</h2>
+                <div class="aa">
                 <a class="<?php echo (isset($_GET['page']) && $_GET['page'] === 'semua') || !isset($_GET['page']) ? 'active' : ''; ?>" href="?page=semua">semua</a>
                 <a class="<?php echo isset($_GET['page']) && $_GET['page'] === 'ra' ? 'active' : ''; ?>" href="?page=ra">RA</a>
                 <a class="<?php echo isset($_GET['page']) && $_GET['page'] === 'rb' ? 'active' : ''; ?>" href="?page=rb">RB</a>
                 <a class="<?php echo isset($_GET['page']) && $_GET['page'] === 'gr' ? 'active' : ''; ?>" href="?page=gr">GR</a>
                 <a class="<?php echo isset($_GET['page']) && $_GET['page'] === 'gtc' ? 'active' : ''; ?>" href="?page=gtc">GTC</a>
+                </div>
             </div>
             <?php
             $page = isset($_GET['page']) ? $_GET['page'] : 'semua';
@@ -108,7 +109,7 @@ mysqli_close($con);
             ?>
         </div>
     </div>
-
+    <script src="../js/main.js"></script>
     <script>
     const prototypeadd = document.querySelector(".filter-button");
         prototypeadd.onclick = () => {

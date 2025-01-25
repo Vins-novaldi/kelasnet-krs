@@ -57,7 +57,7 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
     </head>
 <body>
-    <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
+    <button class="toggle-btn" id="toggleButton">☰</button>
     <div class="header">
         <div class="header-box">
             <div class="p-name">
@@ -67,8 +67,7 @@
                 <h1>SIAM DOSEN</h1>
             </div>
             <div class="logout">
-                <i class="fa-solid fa-right-from-bracket"></i>
-                <a class="logout" href="../logout.php">LOGOUT</a>
+            <a class="logout" href="../logout.php"><i class="fa-solid fa-right-from-bracket"></i> <span>logout</span></a>
             </div>
         </div>
     </div>
@@ -95,57 +94,63 @@
 
         <div class="content" id="content">
             <main class="main-content">
+                <div class="ruangan-status-box">
                 <h1>Jadwal  kelas</h1>
                 <div class="ruangan-status">
-                    <div class="head-ruangan">
-                        <h2>Ruangan</h2>
-                        <div class="head-info">
-                            <p>Matakuliah</p>
-                            <p>Nama Dosen</p>
-                            <p>hari</p>
-                            <p>Jam</p>
-                        </div>
-                        <p class="note2">edit</p>
-                    </div>
-
-                    <?php 
-                    if (mysqli_num_rows($query) > 0) {
-                        while ($data = mysqli_fetch_array($query)) { ?>
-                            <div class="ruangan" id="ruangan-<?= $data['id_ruangan']; ?>">
-                                <h2><?= htmlspecialchars($data['nama_ruangan']); ?></h2>
-                                <div class="info">
-                                    <p><?= htmlspecialchars($data['nama_mata_kuliah']); ?> - <?= htmlspecialchars($data['semester']); ?><?= htmlspecialchars($data['nomor_kelas']); ?></p>
-                                    <p><?= htmlspecialchars($data['nama_dosen']); ?></p>
-                                    <p><?= htmlspecialchars($data['hari']); ?></p>
-                                    <p><?=  date('H:i', strtotime($data['jadwal_mulai'])); ?> - <?=  date('H:i', strtotime($data['jadwal_selesai'])); ?></p>
-                                </div>
-                                <a href="klsnetDosenEdit.php?d=<?php echo $data['id_kelas']?>" class="note2"><i class="fa-solid fa-pen"></i></a>
-                            </div>
+                    <table>
+                    <thead>
+                        <tr>
+                        <th>Ruangan</th>
+                        <th>Matakuliah</th>
+                        <th>Nama Dosen</th>
+                        <th>Hari</th>
+                        <th>Jam</th>
+                        <th>Edit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php 
+                        if (mysqli_num_rows($query) > 0) {
+                            while ($data = mysqli_fetch_array($query)) { ?>
+                                <tr>
+                                    <td><?= htmlspecialchars($data['nama_ruangan']); ?></td>
+                                    <td><?= htmlspecialchars($data['nama_mata_kuliah']); ?> - <?= htmlspecialchars($data['semester']); ?><?= htmlspecialchars($data['nomor_kelas']); ?></td>
+                                    <td><?= htmlspecialchars($data['nama_dosen']); ?></td>
+                                    <td><?= htmlspecialchars($data['hari']); ?></td>
+                                    <td><?= date('H:i', strtotime($data['jadwal_mulai'])); ?> - <?= date('H:i', strtotime($data['jadwal_selesai'])); ?></td>
+                                    <td><a href="klsnetDosenEdit.php?d=<?= $data['id_kelas']; ?>" class="note2"><i class="fa-solid fa-pen"></i></a></td>
+                                </tr>
                             <?php
+                            }
+                        } else {
+                            echo "<tr><td colspan='6'>Tidak ada data untuk dosen ini.</td></tr>";
                         }
-                    } else {
-                        echo "<p>Tidak ada data untuk dosen ini.</p>";
-                    }
-                    ?>
-                    
+                        ?>
+                    </tbody>
+                    </table>
                 </div>
+                </div>
+
                 <!-- ============================================================================================================================================== -->
-                <div class="ruangan-status" style="margin-top: 100px;">
-                    <h1>Jadwal  kelas yang pindah ruangan sementara</h1>
-                    <div class="head-ruangan">
-                        <h2>Ruangan</h2>
-                        <div class="head-info">
-                            <p>Matakuliah</p>
-                            <p>Nama Dosen</p>
-                            <p>Hari</p>
-                            <p>jam</p>
-                        </div>        
-                    </div>
-                    <?php
-                    require "../../koneksi.php";
-                    $id_dosen = $_SESSION['id_dosen'];
-                    
-                    $sqlRuanganBaru = "SELECT 
+                <div class="ruangan-status-box" style="margin-top: 100px;">
+               <h1><span><i class="fa-solid fa-triangle-exclamation"></i></span> Jadwal kelas yang pindah ruangan sementara <span><i class="fa-solid fa-triangle-exclamation"></i></span></h1>
+                <div class="ruangan-status">
+                    <table>
+                    <thead>
+                        <tr>
+                        <th>Ruangan</th>
+                        <th>Matakuliah</th>
+                        <th>Nama Dosen</th>
+                        <th>Hari</th>
+                        <th>Jam</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        require "../../koneksi.php";
+                        $id_dosen = $_SESSION['id_dosen'];
+
+                        $sqlRuanganBaru = "SELECT 
                             lpr.hari_baru,
                             lpr.jadwal_mulai_baru,
                             lpr.jadwal_selesai_baru,
@@ -166,48 +171,33 @@
                         LEFT JOIN Mata_Kuliah m ON k.id_mata_kuliah = m.id_mata_kuliah
                         LEFT JOIN Dosen d ON k.id_dosen = d.id_dosen
                         WHERE k.id_dosen = '$id_dosen' AND lpr.status = 'valid'
-                        ORDER BY r.nama_ruangan;
-                    ";
-                    $queryRuanganBaru = mysqli_query($con, $sqlRuanganBaru);
+                        ORDER BY r.nama_ruangan;";
 
-                    if (mysqli_num_rows($queryRuanganBaru) > 0) {
-                        while ($dataRuanganBaru = mysqli_fetch_array($queryRuanganBaru)) { ?>
-                            <div class="ruangan" id="ruangan-<?= $dataRuanganBaru['id_ruangan']; ?>">
-                                <h2><?= htmlspecialchars($dataRuanganBaru['nama_ruangan']); ?></h2>
-                                <div class="info">
-                                    <p><?= htmlspecialchars($dataRuanganBaru['nama_mata_kuliah']); ?> - <?= htmlspecialchars($dataRuanganBaru['semester']); ?><?= htmlspecialchars($dataRuanganBaru['nomor_kelas']); ?></p>
-                                    <p><?= htmlspecialchars($dataRuanganBaru['nama_dosen']); ?></p>
-                                    <p><?= htmlspecialchars($dataRuanganBaru['hari_baru']); ?></p>
-                                   <p><?=  date('H:i', strtotime($dataRuanganBaru['jadwal_mulai_baru'])); ?> - <?=  date('H:i', strtotime($dataRuanganBaru['jadwal_selesai_baru'])); ?></p>
-                                </div>
-                            </div>
-                        <?php
+                        $queryRuanganBaru = mysqli_query($con, $sqlRuanganBaru);
+
+                        if (mysqli_num_rows($queryRuanganBaru) > 0) {
+                            while ($dataRuanganBaru = mysqli_fetch_array($queryRuanganBaru)) { ?>
+                                <tr>
+                                    <td><?= htmlspecialchars($dataRuanganBaru['nama_ruangan']); ?></td>
+                                    <td><?= htmlspecialchars($dataRuanganBaru['nama_mata_kuliah']); ?> - <?= htmlspecialchars($dataRuanganBaru['semester']); ?><?= htmlspecialchars($dataRuanganBaru['nomor_kelas']); ?></td>
+                                    <td><?= htmlspecialchars($dataRuanganBaru['nama_dosen']); ?></td>
+                                    <td><?= htmlspecialchars($dataRuanganBaru['hari_baru']); ?></td>
+                                    <td><?=  date('H:i', strtotime($dataRuanganBaru['jadwal_mulai_baru'])); ?> - <?=  date('H:i', strtotime($dataRuanganBaru['jadwal_selesai_baru'])); ?></td>
+                                </tr>
+                            <?php
+                            }
+                        } else {
+                            echo "<tr><td colspan='5'>Tidak ada data untuk dosen ini</td></tr>";
                         }
-                    } else {
-                        echo "Tidak ada data untuk dosen ini";
-                    }
-                    ?>            
+                        ?>
+                    </tbody>
+                    </table>
+                </div>
                 </div>
             </main>
         </div>
     </div>
     
-    <script>
-    function toggleDropdown() {
-        const dropdown = document.getElementById("dropdown");
-        if (dropdown.style.display === "block") {
-            dropdown.style.display = "none";
-        } else {
-            dropdown.style.display = "block";
-        }
-    }
-    
-    function toggleSidebar() {
-        const sidebar = document.getElementById("sidebar");
-        const content = document.getElementById("content");
-        sidebar.classList.toggle("hidden");
-        content.classList.toggle("expanded");
-    }
-    </script>
+    <script src="../js/main.js"></script>
 </body>
 </html>

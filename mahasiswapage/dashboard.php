@@ -22,7 +22,7 @@ $data = mysqli_fetch_array($dataResult);
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
   <body>
-    <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
+    <button class="toggle-btn" id="toggleButton">☰</button>
     <div class="header">
       <div class="header-box">
         <div class="p-name">
@@ -30,10 +30,10 @@ $data = mysqli_fetch_array($dataResult);
         </div>
         <h1>SIAM</h1>
         <div class="logout">
-          <i class="fa-solid fa-right-from-bracket"></i>
-          <a class="logout" href="logout.php">LOGOUT</a>
+          <a class="logout" href="logout.php"><i class="fa-solid fa-right-from-bracket"></i> <span>logout</span></a>
         </div>
       </div>
+      <!-- konten -->
     </div>
     <div class="container">
       <div class="sidebar" id="sidebar">
@@ -156,38 +156,38 @@ $data = mysqli_fetch_array($dataResult);
               </form>
               <?php
               require "../koneksi.php";
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $tanggal_mulai = $_POST['tanggal_mulai'];
-    $tanggal_selesai = $_POST['tanggal_selesai'];
+          if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+              $tanggal_mulai = $_POST['tanggal_mulai'];
+              $tanggal_selesai = $_POST['tanggal_selesai'];
 
 
 
-    if ($con->connect_error) {
-        die("Koneksi gagal: " . $con->connect_error);
-    }
+              if ($con->connect_error) {
+                  die("Koneksi gagal: " . $con->connect_error);
+              }
 
-    $sql = "UPDATE pengaturan_krs SET tanggal_mulai = '$tanggal_mulai', tanggal_selesai = '$tanggal_selesai' WHERE id = 1";
+              $sql = "UPDATE pengaturan_krs SET tanggal_mulai = '$tanggal_mulai', tanggal_selesai = '$tanggal_selesai' WHERE id = 1";
 
-    if ($con->query($sql) === TRUE) {
+              if ($con->query($sql) === TRUE) {
 
-        echo "<script>
-                          Swal.fire({
-                              icon: 'success',
-                              title: 'Berhasil!',
-                              text: 'Pengaturan berhasil diperbarui.',
-                              timer: 1500,
-                              showConfirmButton: false
-                          }).then(() => {
-                              window.location.href = 'dashboard.php';
-                          });
-                      </script>";
-    } else {
-        echo "Error: " . $con->error;
-    }
+                  echo "<script>
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Berhasil!',
+                                        text: 'Pengaturan berhasil diperbarui.',
+                                        timer: 1500,
+                                        showConfirmButton: false
+                                    }).then(() => {
+                                        window.location.href = 'dashboard.php';
+                                    });
+                                </script>";
+              } else {
+                  echo "Error: " . $con->error;
+              }
 
-    $con->close();
-}
-?>
+              $con->close();
+          }
+          ?>
 
 
           <?php }  ?>
@@ -195,23 +195,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
       </div>
     </div>
-
-    <script>
-      function toggleSidebar() {
-        const sidebar = document.getElementById("sidebar");
-        const content = document.getElementById("content");
-        sidebar.classList.toggle("hidden");
-        content.classList.toggle("expanded");
-      }
-      
-      function toggleDropdown() {
-        const dropdown = document.getElementById("dropdown");
-        if (dropdown.style.display === "block") {
-          dropdown.style.display = "none";
-        } else {
-          dropdown.style.display = "block";
-        }
-      }
-    </script>
+    <script src="js/main.js"></script>
   </body>
 </html>

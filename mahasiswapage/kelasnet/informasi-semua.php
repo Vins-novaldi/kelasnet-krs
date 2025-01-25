@@ -81,74 +81,68 @@ if (!$query) {
     <main class="main-content">
         <h1>Status Ruangan</h1>
         <div class="ruangan-status">
-            <div class="head-ruangan">
-                <h2>Ruangan</h2>
-                <div class="head-info">
-                    <p>Matakuliah</p>
-                    <p>Nama Dosen</p>
-                    <p>Jadwal</p>
-                    <p>Status Ruangan</p>
-                </div>
-            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Ruangan</th>
+                        <th>Matakuliah</th>
+                        <th>Nama Dosen</th>
+                        <th>Jadwal</th>
+                        <th>Status Ruangan</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php 
+                    if (mysqli_num_rows($query) > 0) {
+                        while ($data = mysqli_fetch_array($query)) { 
+                            $id_ruangan = $data['id_ruangan'];
+                            $nama_ruangan = htmlspecialchars($data['nama_ruangan']);
+                            $lokasi = htmlspecialchars($data['lokasi']);
+                            $nama_mata_kuliah = htmlspecialchars($data['nama_mata_kuliah']);
+                            $semester = htmlspecialchars($data['semester']);
+                            $nomor_kelas = htmlspecialchars($data['nomor_kelas']);
+                            $nama_dosen = htmlspecialchars($data['nama_dosen']);
+                            $jadwal_mulai = $data['jadwal_mulai'];
+                            $jadwal_selesai = $data['jadwal_selesai'];
+                            $alasan_pindah = htmlspecialchars($data['alasan_pindah']);
 
-            <?php 
-            if (mysqli_num_rows($query) > 0) {
-                while ($data = mysqli_fetch_array($query)) { 
-                    $id_ruangan = $data['id_ruangan'];
-                    $nama_ruangan = htmlspecialchars($data['nama_ruangan']);
-                    $lokasi = htmlspecialchars($data['lokasi']);
-                    $nama_mata_kuliah = htmlspecialchars($data['nama_mata_kuliah']);
-                    $semester = htmlspecialchars($data['semester']);
-                    $nomor_kelas = htmlspecialchars($data['nomor_kelas']);
-                    $nama_dosen = htmlspecialchars($data['nama_dosen']);
-                    $jadwal_mulai = $data['jadwal_mulai'];
-                    $jadwal_selesai = $data['jadwal_selesai'];
-                    $alasan_pindah = htmlspecialchars($data['alasan_pindah']);
-
-                    $status_ruangan = ($nama_mata_kuliah || $alasan_pindah) ? "Ada Jadwal" : "Ruangan Kosong";
-            ?>
-            <div class="ruangan" id="ruangan-<?= $id_ruangan ?>" data-id="<?= $id_ruangan ?>" data-gedung="<?= $lokasi ?>">
-                <p class="note <?= ($nama_mata_kuliah || $alasan_pindah) ? 'ruangan-ada-jadwal' : 'ruangan-kosong' ?>"></p>
-                <h2><?= $nama_ruangan ?></h2>
-                <div class="info">
-                    <?php if ($nama_mata_kuliah) { ?>
-                        <p><?= $nama_mata_kuliah ?> - <?= $semester . $nomor_kelas ?></p>
-                        <p><?= $nama_dosen ?></p>
-                        <p><?= date('H:i', strtotime($jadwal_mulai)) . " - " . date('H:i', strtotime($jadwal_selesai)) ?></p>
-                        <p><?= $status_ruangan ?></p>
-                    <?php } else { ?>
-                        <p></p>
-                        <p></p>
-                        <p id="next-schedule-<?= $id_ruangan ?>"><strong>Memuat jadwal berikutnya...</strong></p>
-                        <p><?= $status_ruangan ?></p>
-                    <?php } ?>
-                </div>
-            </div>
-            <?php 
-                }
-            } else {
-                echo '<p>Tidak ada data yang ditemukan.</p>';
-            }
-            ?>
+                            $status_ruangan = ($nama_mata_kuliah || $alasan_pindah) ? "Ada Jadwal" : "Ruangan Kosong";
+                    ?>
+                    <tr class="ruangan" id="ruangan-<?= $id_ruangan ?>" data-id="<?= $id_ruangan ?>" data-gedung="<?= $lokasi ?>">
+                        <td>
+                            <p class="note <?= ($nama_mata_kuliah || $alasan_pindah) ? 'ruangan-kosong' : 'ruangan-ada-jadwal' ?>"></p>
+                            <h2><?= $nama_ruangan ?></h2>
+                        </td>
+                        <td>
+                            <?php if ($nama_mata_kuliah) { ?>
+                                <?= $nama_mata_kuliah ?> - <?= $semester . $nomor_kelas ?>
+                            <?php } ?>
+                        </td>
+                        <td>
+                            <?= $nama_dosen ?>
+                        </td>
+                        <td>
+                            <?php if ($nama_mata_kuliah) { ?>
+                                <?= date('H:i', strtotime($jadwal_mulai)) . " - " . date('H:i', strtotime($jadwal_selesai)) ?>
+                            <?php } else { ?>
+                                <p id="next-schedule-<?= $id_ruangan ?>">Memuat jadwal berikutnya...</p>
+                            <?php } ?>
+                        </td>
+                        <td class="note2 <?= ($nama_mata_kuliah || $alasan_pindah) ? 'ruangan-kosong' : 'ruangan-ada-jadwal' ?>">
+                        <p ><?= $status_ruangan ?></p>
+                        </td>
+                    </tr>
+                    <?php 
+                        }
+                    } else {
+                        echo '<tr><td colspan="5">Tidak ada data yang ditemukan.</td></tr>';
+                    }
+                    ?>
+                </tbody>
+            </table>
         </div>
     </main>
     <script>
-        function toggleDropdown() {
-        const dropdown = document.getElementById("dropdown");
-        if (dropdown.style.display === "block") {
-          dropdown.style.display = "none";
-        } else {
-          dropdown.style.display = "block";
-        }
-      }
-
-      function toggleSidebar() {
-        const sidebar = document.getElementById("sidebar");
-        const content = document.getElementById("content");
-        sidebar.classList.toggle("hidden");
-        content.classList.toggle("expanded");
-      }
-
         document.addEventListener("DOMContentLoaded", () => {
             setInterval(() => {
                 document.querySelectorAll('.ruangan').forEach(ruangan => {

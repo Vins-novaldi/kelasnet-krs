@@ -19,7 +19,7 @@
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </head>
   <body>
-    <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
+    <button class="toggle-btn" id="toggleButton">☰</button>
     <div class="header">
       <div class="header-box">
         <div class="p-name">
@@ -27,8 +27,7 @@
         </div>
         <h1>SIAM</h1>
         <div class="logout">
-          <i class="fa-solid fa-right-from-bracket"></i>
-          <a class="logout" href="../logout.php">LOGOUT</a>
+          <a class="logout" href="../logout.php"><i class="fa-solid fa-right-from-bracket"></i> <span>logout</span></a>
         </div>
       </div>
     </div>
@@ -99,7 +98,7 @@
         </div>
         <div class="tabel">
           <div class="student-info">
-            <table>
+            <table >
               <tr>
                 <td>Nama</td>
                 <td>:</td>
@@ -294,22 +293,6 @@
         </div>
       </div>
     </div>
-    <script>
-      function toggleSidebar() {
-        const sidebar = document.getElementById("sidebar");
-        const content = document.getElementById("content");
-        sidebar.classList.toggle("hidden");
-        content.classList.toggle("expanded");
-      }
-
-      function toggleDropdown() {
-        const dropdown = document.getElementById("dropdown");
-        if (dropdown.style.display === "block") {
-          dropdown.style.display = "none";
-        } else {
-          dropdown.style.display = "block";
-        }
-      }
-    </script>
+    <script src="../js/main.js"></script>
   </body>
 </html>

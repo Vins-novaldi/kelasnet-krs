@@ -53,7 +53,7 @@ $result = mysqli_query($con, $query);
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>KRS input</title>
-        <link rel="stylesheet" href="../css/inkrs.css" />
+        <link rel="stylesheet" href="../css/input-krs.css" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>

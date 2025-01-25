@@ -1,11 +1,13 @@
-
+<?php
+session_start();
+require "../koneksi.php";
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login</title>
-    <link rel="stylesheet" href="css/log.css">
   </head>
   <style>
     body {
@@ -31,7 +33,6 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     display: flex;
     flex-direction: column;
-
     border-radius: 0px 20px 0px 20px;
     }
     .login-header {
@@ -56,7 +57,7 @@
     .login-container input {
     width: 230px;
     padding: 10px;
-    margin: 0px 40px 20px 40px;
+    margin: 0px 10px 20px 40px;
     border: 1px solid #cccccc;
     border-radius: 4px;
     background-color: #e6f0ff;
@@ -77,7 +78,20 @@
     font-weight: bold;
     cursor: pointer;
     }
-
+@media (max-width: 768px) {
+    .login-header {
+        text-align: center;
+        font-size: 1.2rem;
+    }
+    .login-header{
+       margin: 0px 0px 10px 0px;
+    }
+    .login-container input,
+    .login-container button {
+        width: calc(100% - 50px);
+        margin: 10px auto;
+    }
+}
   </style>
   <body>
     <div class="container">

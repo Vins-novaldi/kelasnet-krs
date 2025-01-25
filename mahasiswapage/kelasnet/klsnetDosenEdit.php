@@ -65,7 +65,7 @@ mysqli_close($con);
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
-    <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
+    <button class="toggle-btn" id="toggleButton">☰</button>
     <div class="header">
     <div class="header-box">
         <div class="p-name">
@@ -75,8 +75,7 @@ mysqli_close($con);
         <h1>SIAM DOSEN</h1>
         </div>
         <div class="logout">
-        <i class="fa-solid fa-right-from-bracket"></i>
-        <a class="logout" href="../logout.php">LOGOUT</a>
+          <a class="logout" href="../logout.php"><i class="fa-solid fa-right-from-bracket"></i> <span>logout</span></a>
         </div>
     </div>
     </div>
@@ -99,164 +98,148 @@ mysqli_close($con);
 
         <div class="content" id="content">
             <main class="main-content">
-                <h1>Edit Jadwal Kelas</h1>
-                <div class="ruangan-status">
-                    <div class="head-ruangan">
-                        <div class="head-info" style="padding: 8px 0px;">
-                            <p>Matakuliah</p>
-                            <p>Nama Dosen</p>
-                            <p>Jadwal</p>
-                            <p>hari</p>
-                            <p>Ruangan</p>
-                        </div>
-                    </div>
-                    <form action="" method="post" enctype="multipart/form-data">
-                        <input type="hidden" name="id_kelas" value="<?= htmlspecialchars($query['id_kelas']); ?>">
-                        <input type="hidden" name="jadwal_mulai" value="<?= htmlspecialchars($query['jadwal_mulai']); ?>">
-                        <input type="hidden" name="jadwal_selesai" value="<?= htmlspecialchars($query['jadwal_selesai']); ?>">
-                        <input type="hidden" name="id_ruangan_asal" value="<?= htmlspecialchars($query['id_ruangan']); ?>">
-                        <input type="hidden" name="hari_baru" value="<?= htmlspecialchars($query['hari']); ?>">
-                        <div class="ruangan" id="ruangan">
-                            <div class="info">
-                                <p><?= htmlspecialchars($query['nama_mata_kuliah']); ?> - <?= htmlspecialchars($query['semester']); ?><?= htmlspecialchars($query['nomor_kelas']); ?></p>
-                                <p><?= htmlspecialchars($query['nama_dosen']); ?></p>
-                                <p><input type="time" name="jadwal_mulai_baru" value="<?= date('H:i', strtotime($query['jadwal_mulai'])); ?>"> - <input type="time" name="jadwal_selesai_baru" value="<?= date('H:i', strtotime($query['jadwal_selesai'])); ?>"></p>
-
-                                <div class="pilih-hari">
+                <div class="ruangan-status-box">
+                <h1>Formulir Pemindahan Ruangan</h1>
+                    <div class="ruangan-status">
+                        <form action="" method="post" enctype="multipart/form-data">
+                            <input type="hidden" name="id_kelas" value="<?= htmlspecialchars($query['id_kelas']); ?>">
+                            <input type="hidden" name="jadwal_mulai" value="<?= htmlspecialchars($query['jadwal_mulai']); ?>">
+                            <input type="hidden" name="jadwal_selesai" value="<?= htmlspecialchars($query['jadwal_selesai']); ?>">
+                            <input type="hidden" name="id_ruangan_asal" value="<?= htmlspecialchars($query['id_ruangan']); ?>">
+                            <input type="hidden" name="hari_baru" value="<?= htmlspecialchars($query['hari']); ?>">
+                            
+                            <table>
+                                <thead>
+                                <tr>
+                                    <th>Matakuliah</th>
+                                    <th>Nama Dosen</th>
+                                    <th>Jadwal</th>
+                                    <th>Hari</th>
+                                    <th>Ruangan</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td><?= htmlspecialchars($query['nama_mata_kuliah']); ?> - <?= htmlspecialchars($query['semester']); ?><?= htmlspecialchars($query['nomor_kelas']); ?></td>
+                                    <td><?= htmlspecialchars($query['nama_dosen']); ?></td>
+                                    <td><input type="time" name="jadwal_mulai_baru" value="<?= date('H:i', strtotime($query['jadwal_mulai'])); ?>"> - <input type="time" name="jadwal_selesai_baru" value="<?= date('H:i', strtotime($query['jadwal_selesai'])); ?>"></td>
+                                    <td>
                                     <select name="hari" id="hari">
                                         <option value="<?= $query['hari']; ?>"><?= $query['hari']; ?></option>
                                         <?php while($dataHari = mysqli_fetch_array($queryHari)) { ?>
-                                            <option value="<?= $dataHari['hari']; ?>"><?= $dataHari['hari']; ?></option>
+                                        <option value="<?= $dataHari['hari']; ?>"><?= $dataHari['hari']; ?></option>
                                         <?php } ?>
                                     </select>
-                                </div>
-                                <div class="pilih-ruangan">
+                                    </td>
+                                    <td>
                                     <select name="ruang" id="ruang">
                                         <option value="<?= $query['id_ruangan']; ?>"><?= $query['nama_ruangan']; ?></option>
                                         <?php while($dataRuangan = mysqli_fetch_array($queryRuangan)) { ?>
-                                            <option value="<?= $dataRuangan['id_ruangan']; ?>"><?= $dataRuangan['nama_ruangan']; ?></option>
+                                        <option value="<?= $dataRuangan['id_ruangan']; ?>"><?= $dataRuangan['nama_ruangan']; ?></option>
                                         <?php } ?>
                                     </select>
-                                </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="simpanBtn">
+                                <button type="submit" name="simpanBtn">Simpan</button>
                             </div>
-                        </div>
-                        <div class="simpanBtn">
-                            <button type="submit" name="simpanBtn">Simpan</button>
-                        </div>
-                    </form>
-<?php
-require "../../koneksi.php";
+                            <?php
+                                require "../../koneksi.php";
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['simpanBtn'])) {
-    $id_kelas = $_POST['id_kelas'];
-    $id_ruangan_baru = $_POST['ruang'];
-    $id_ruangan_asal = $_POST['id_ruangan_asal'];
-    $hari_baru = $_POST['hari'];
-    $jadwal_mulai_baru = $_POST['jadwal_mulai_baru']; // Ambil waktu mulai baru
-    $jadwal_selesai_baru = $_POST['jadwal_selesai_baru']; // Ambil waktu selesai baru
+                                if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['simpanBtn'])) {
+                                    $id_kelas = $_POST['id_kelas'];
+                                    $id_ruangan_baru = $_POST['ruang'];
+                                    $id_ruangan_asal = $_POST['id_ruangan_asal'];
+                                    $hari_baru = $_POST['hari'];
+                                    $jadwal_mulai_baru = $_POST['jadwal_mulai_baru']; // Ambil waktu mulai baru
+                                    $jadwal_selesai_baru = $_POST['jadwal_selesai_baru']; // Ambil waktu selesai baru
 
-    if (empty($id_ruangan_baru)) {
-        die("Ruangan baru belum dipilih.");
-    }
+                                    if (empty($id_ruangan_baru)) {
+                                        die("Ruangan baru belum dipilih.");
+                                    }
 
-    // Validasi apakah ruangan baru tersedia dan hari baru tidak bentrok
-    $queryValidasi = $con->prepare("SELECT * FROM Kelas
-        WHERE id_ruangan = ? 
-        AND jadwal_mulai < ? 
-        AND jadwal_selesai > ? 
-        AND hari = ? 
-        AND id_kelas != ?");
-    $queryValidasi->bind_param('isssi', $id_ruangan_baru, $jadwal_selesai_baru, $jadwal_mulai_baru, $hari_baru, $id_kelas);
+                                    // Validasi apakah ruangan baru tersedia dan hari baru tidak bentrok
+                                    $queryValidasi = $con->prepare("SELECT * FROM Kelas
+                                        WHERE id_ruangan = ? 
+                                        AND jadwal_mulai < ? 
+                                        AND jadwal_selesai > ? 
+                                        AND hari = ? 
+                                        AND id_kelas != ?");
+                                    $queryValidasi->bind_param('isssi', $id_ruangan_baru, $jadwal_selesai_baru, $jadwal_mulai_baru, $hari_baru, $id_kelas);
 
-    $queryValidasi->execute();
-    $resultValidasi = $queryValidasi->get_result();
+                                    $queryValidasi->execute();
+                                    $resultValidasi = $queryValidasi->get_result();
 
-    if ($resultValidasi->num_rows > 0) {
-        echo "<script>
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Ruangan Tidak Tersedia',
-                    text: 'Ruangan yang Anda pilih sudah terisi pada jadwal ini. Silakan pilih ruangan lain.',
-                    showConfirmButton: true
-                }).then(() => {
-                    window.history.back(); 
-                });
-            </script>";
-        exit;
-    } else {
-        echo "<script>
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Ruangan Tersedia',
-                    text: 'Ruangan tersedia pada jadwal ini.',
-                    showConfirmButton: true
-                });
-            </script>";
-    }
+                                    if ($resultValidasi->num_rows > 0) {
+                                        echo "<script>
+                                                Swal.fire({
+                                                    icon: 'error',
+                                                    title: 'Ruangan Tidak Tersedia',
+                                                    text: 'Ruangan yang Anda pilih sudah terisi pada jadwal ini. Silakan pilih ruangan lain.',
+                                                    showConfirmButton: true
+                                                }).then(() => {
+                                                    window.history.back(); 
+                                                });
+                                            </script>";
+                                        exit;
+                                    } else {
+                                        echo "<script>
+                                                Swal.fire({
+                                                    icon: 'success',
+                                                    title: 'Ruangan Tersedia',
+                                                    text: 'Ruangan tersedia pada jadwal ini.',
+                                                    showConfirmButton: true
+                                                });
+                                            </script>";
+                                    }
 
-    // Catat log pemindahan ruangan dan hari
-    $insertLog = $con->prepare("INSERT INTO Log_Pindah_Ruangan 
-        (id_kelas, id_ruangan_awal, id_ruangan_baru, waktu_pindah, jadwal_mulai_baru, jadwal_selesai_baru, alasan, hari_baru)
-        VALUES (?, ?, ?, NOW(), ?, ?, ?, ?)");
+                                    // Catat log pemindahan ruangan dan hari
+                                    $insertLog = $con->prepare("INSERT INTO Log_Pindah_Ruangan 
+                                        (id_kelas, id_ruangan_awal, id_ruangan_baru, waktu_pindah, jadwal_mulai_baru, jadwal_selesai_baru, alasan, hari_baru)
+                                        VALUES (?, ?, ?, NOW(), ?, ?, ?, ?)");
 
-    $alasan = "Pemindahan ruangan dan hari";
+                                    $alasan = "Pemindahan ruangan dan hari";
 
-    // Binding parameter dengan tipe yang benar
-    $insertLog->bind_param('iiissss', $id_kelas, $id_ruangan_asal, $id_ruangan_baru, $jadwal_mulai_baru, $jadwal_selesai_baru, $alasan, $hari_baru);
+                                    // Binding parameter dengan tipe yang benar
+                                    $insertLog->bind_param('iiissss', $id_kelas, $id_ruangan_asal, $id_ruangan_baru, $jadwal_mulai_baru, $jadwal_selesai_baru, $alasan, $hari_baru);
 
-    if ($insertLog->execute()) {
-        echo "<script>
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Berhasil!',
-                    text: 'Pemindahan ruangan dan hari berhasil dicatat',
-                    timer: 1500,
-                    showConfirmButton: false
-                }).then(() => {
-                    window.location.href = 'klsnetDosen.php';
-                });
-            </script>";
-    } else {
-        echo "<script>
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Gagal!',
-                    text: 'Gagal mencatat pemindahan ruangan: " . $insertLog->error . "',
-                    timer: 2000,
-                    showConfirmButton: false
-                }).then(() => {
-                    window.location.href = 'klsnetDosenEdit.php';
-                });
-            </script>";
-    }
-}
+                                    if ($insertLog->execute()) {
+                                        echo "<script>
+                                                Swal.fire({
+                                                    icon: 'success',
+                                                    title: 'Berhasil!',
+                                                    text: 'Pemindahan ruangan dan hari berhasil dicatat',
+                                                    timer: 1500,
+                                                    showConfirmButton: false
+                                                }).then(() => {
+                                                    window.location.href = 'klsnetDosen.php';
+                                                });
+                                            </script>";
+                                    } else {
+                                        echo "<script>
+                                                Swal.fire({
+                                                    icon: 'error',
+                                                    title: 'Gagal!',
+                                                    text: 'Gagal mencatat pemindahan ruangan: " . $insertLog->error . "',
+                                                    timer: 2000,
+                                                    showConfirmButton: false
+                                                }).then(() => {
+                                                    window.location.href = 'klsnetDosenEdit.php';
+                                                });
+                                            </script>";
+                                    }
+                                }
 
-?>
-
-
-
-
+                            ?>
+                        </form>
+                    </div>
                 </div>
+
             </main>
         </div>
     </div>
-
-    <script>
-    function toggleDropdown() {
-        const dropdown = document.getElementById("dropdown");
-        if (dropdown.style.display === "block") {
-            dropdown.style.display = "none";
-        } else {
-            dropdown.style.display = "block";
-        }
-    }
-
-    function toggleSidebar() {
-        const sidebar = document.getElementById("sidebar");
-        const content = document.getElementById("content");
-        sidebar.classList.toggle("hidden");
-        content.classList.toggle("expanded");
-    }
-    </script>
+    <script src="../js/main.js"></script>
 </body>
 </html>
