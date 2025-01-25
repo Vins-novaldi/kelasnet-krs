@@ -28,7 +28,7 @@ $data = mysqli_fetch_array($dataResult);
         </div>
         <h1>SIAM</h1>
         <div class="logout">
-          <a class="logout" href="logout.php"><i class="fa-solid fa-right-from-bracket"></i> <span>logout</span></a>
+          <a class="logout" href="../logout.php"><i class="fa-solid fa-right-from-bracket"></i> <span>logout</span></a>
         </div>
       </div>
     </div>
