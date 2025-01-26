@@ -23,6 +23,7 @@ require "../koneksi.php";
     .container {
     display: flex;
     justify-content: center;
+    flex-direction: column;
     align-items: center;
     width: 100%;
     }
@@ -92,54 +93,60 @@ require "../koneksi.php";
         margin: 10px auto;
     }
 }
-  </style>
-  <body>
+</style>
+<body>
     <div class="container">
         <form action="#" method="post">
-        <div class="login-container">
-            <h1 class="login-header">LOGIN SIAM</h1>
-            <input type="text"  placeholder="email/username" id="username" name="username">
-            <input type="password"  placeholder="Password" id="password" name="password">
-            <button type="submit" name="loginbtn"> Login</button>
-                    <?php
-                    if (isset($_POST['loginbtn'])) {
-                        $username = htmlspecialchars($_POST['username']);
-                        $password = htmlspecialchars($_POST['password']);
+            <div class="login-container">
+                <h1 class="login-header">LOGIN SIAM</h1>
+                <input type="text"  placeholder="email/username" id="username" name="username">
+                <input type="password"  placeholder="Password" id="password" name="password">
+                <button type="submit" name="loginbtn"> Login</button>
+                        <?php
+                        if (isset($_POST['loginbtn'])) {
+                            $username = htmlspecialchars($_POST['username']);
+                            $password = htmlspecialchars($_POST['password']);
 
-                        $query = mysqli_query($con, "SELECT * FROM users WHERE username = '$username'");
-                        $countdata = mysqli_num_rows($query);
-                        $data = mysqli_fetch_array($query);
+                            $query = mysqli_query($con, "SELECT * FROM users WHERE username = '$username'");
+                            $countdata = mysqli_num_rows($query);
+                            $data = mysqli_fetch_array($query);
 
-                        if ($countdata > 0) {
-                            if (password_verify($password, $data['password'])) {
-                                $_SESSION['username'] = $data['username'];
-                                $_SESSION['login'] = true;
-                                $_SESSION['role'] = $data['role']; 
+                            if ($countdata > 0) {
+                                if (password_verify($password, $data['password'])) {
+                                    $_SESSION['username'] = $data['username'];
+                                    $_SESSION['login'] = true;
+                                    $_SESSION['role'] = $data['role']; 
 
-                                if ($data['role'] === 'mahasiswa') {
-                                    $_SESSION['id_mahasiswa'] = $data['id_mahasiswa'];
-                                    header('location: dashboard.php');
-                                }   
-                                elseif ($data['role'] === 'dosen') {
-                                    $_SESSION['id_dosen'] = $data['id_dosen'];
-                                header('location: kelasnet/klsnetDosen.php');
+                                    if ($data['role'] === 'mahasiswa') {
+                                        $_SESSION['id_mahasiswa'] = $data['id_mahasiswa'];
+                                        header('location: dashboard.php');
+                                    }   
+                                    elseif ($data['role'] === 'dosen') {
+                                        $_SESSION['id_dosen'] = $data['id_dosen'];
+                                    header('location: kelasnet/klsnetDosen.php');
+                                    }
+                                } 
+                                else {
+                                    ?>
+                                    <div class="alert warning">Password Salah</div>
+                                    <?php
                                 }
                             } 
                             else {
                                 ?>
-                                <div class="alert warning">Password Salah</div>
+                                <div class="alert warning">Akun Tidak Tersedia</div>
                                 <?php
                             }
-                        } 
-                        else {
-                            ?>
-                            <div class="alert warning">Akun Tidak Tersedia</div>
-                            <?php
                         }
-                    }
-                    ?>
-            
+                        ?>
+                
+            </div>
+        </form>
+        <div style="text-align: center; margin-top: 20px; border: solid #ddd 2px; border-radius: 5px; padding: 10px; background-color: #e6e3e3;">
+            <h1 style="font-size: 1.1rem; color: red;">Login Akun</h1>
+            <p style="font-size: 1rem;">username&password : kelompok7</p>
+            <p style="font-size: 1rem;">username&password : kelompok9</p>
+        </div>
     </div>
-    </form>
   </body>
 </html>
