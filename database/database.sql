@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 24 Jan 2025 pada 14.04
+-- Waktu pembuatan: 26 Jan 2025 pada 10.01
 -- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.2.12
 
@@ -60,20 +60,6 @@ INSERT INTO `dosen` (`id_dosen`, `nama`, `nip`, `departemen`, `kontak`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `jadwal_kosong`
---
-
-CREATE TABLE `jadwal_kosong` (
-  `id_jadwal_kosong` int(11) NOT NULL,
-  `id_ruangan` int(11) DEFAULT NULL,
-  `waktu_kosong` datetime DEFAULT NULL,
-  `durasi` int(11) DEFAULT NULL,
-  `status_sementara` tinyint(1) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
 -- Struktur dari tabel `kelas`
 --
 
@@ -96,8 +82,8 @@ CREATE TABLE `kelas` (
 --
 
 INSERT INTO `kelas` (`id_kelas`, `id_mata_kuliah`, `nomor_kelas`, `tipe_kelas`, `hari`, `jadwal_mulai`, `jadwal_selesai`, `id_ruangan`, `id_dosen`, `kapasitas_kelas`, `peserta`) VALUES
-(15, 4, 'A10', 'Teori', 'Thursday', '15:00:00.000000', '15:07:00.000000', 1, 8, 40, 1),
-(16, 3, 'A10', 'Praktik', 'Tuesday', '14:45:00.000000', '15:45:00.000000', 2, 8, 40, 1),
+(15, 4, 'A10', 'Teori', 'Thursday', '15:00:00.000000', '15:07:00.000000', 1, 8, 40, 0),
+(16, 3, 'A10', 'Praktik', 'Tuesday', '14:45:00.000000', '15:45:00.000000', 2, 8, 40, 0),
 (17, 6, 'A8', 'Teori', 'Friday', '13:30:00.000000', '16:00:00.000000', 7, 1, 40, 0),
 (18, 5, 'A8', 'Praktik', 'Wednesday', '14:25:00.000000', '15:15:00.000000', 9, 1, 40, 0),
 (19, 1, 'A5', 'Teori', 'Tuesday', '13:00:00.000000', '14:40:00.000000', 3, 10, 40, 0),
@@ -105,25 +91,31 @@ INSERT INTO `kelas` (`id_kelas`, `id_mata_kuliah`, `nomor_kelas`, `tipe_kelas`, 
 (21, 8, 'A3', 'Teori', 'Wednesday', '10:52:00.000000', '12:32:00.000000', 8, 6, 40, 0),
 (22, 9, 'A2', 'Teori', 'Thursday', '08:41:00.000000', '10:21:00.000000', 5, 7, 40, 0),
 (23, 7, 'A10', 'Teori', 'Thursday', '13:00:00.000000', '15:30:00.000000', 11, 12, 40, 0),
-(24, 2, 'A7', 'Teori', 'Friday', '16:01:00.000000', '17:41:00.000000', 7, 1, 40, 1),
-(25, 6, 'A1', 'Teori', 'Monday', '07:00:00.000000', '09:30:00.000000', 5, 4, 40, 2),
+(24, 2, 'A7', 'Teori', 'Friday', '16:01:00.000000', '17:41:00.000000', 7, 1, 40, 0),
+(25, 6, 'A1', 'Teori', 'Monday', '07:00:00.000000', '09:30:00.000000', 5, 4, 40, 0),
 (26, 5, 'A10', 'Praktik', 'Monday', '07:30:00.000000', '08:20:00.000000', 9, 4, 40, 0),
-(27, 3, 'A2', 'Praktik', 'Monday', '07:30:00.000000', '08:20:00.000000', 2, 3, 40, 0),
+(27, 3, 'A2', 'Praktik', 'Monday', '07:30:00.000000', '08:20:00.000000', 2, 3, 40, 1),
 (28, 3, 'A3', 'Praktik', 'Monday', '08:21:00.000000', '09:11:00.000000', 2, 3, 40, 0),
 (29, 3, 'A4', 'Praktik', 'Monday', '09:12:00.000000', '10:02:00.000000', 2, 3, 40, 0),
 (30, 6, 'A6', 'Teori', 'Monday', '09:31:00.000000', '12:01:00.000000', 5, 4, 40, 0),
 (31, 8, 'A9', 'Teori', 'Tuesday', '07:00:00.000000', '08:40:00.000000', 10, 13, 40, 0),
-(32, 5, 'A1', 'Praktik', 'Tuesday', '07:30:00.000000', '08:20:00.000000', 9, 4, 40, 2),
+(32, 5, 'A1', 'Praktik', 'Tuesday', '07:30:00.000000', '08:20:00.000000', 9, 4, 40, 0),
 (33, 5, 'A2', 'Praktik', 'Tuesday', '08:21:00.000000', '09:10:00.000000', 9, 4, 40, 0),
-(34, 8, 'A10', 'Teori', 'Tuesday', '08:41:00.000000', '10:21:00.000000', 10, 13, 40, 1),
+(34, 8, 'A10', 'Teori', 'Tuesday', '08:41:00.000000', '10:21:00.000000', 10, 13, 40, 0),
 (35, 5, 'A3', 'Praktik', 'Tuesday', '09:11:00.000000', '10:01:00.000000', 9, 4, 40, 0),
 (36, 1, 'A2', 'Teori', 'Tuesday', '10:22:00.000000', '12:02:00.000000', 10, 10, 40, 0),
-(37, 9, 'A7', 'Teori', 'Tuesday', '08:41:00.000000', '10:21:00.000000', 3, 14, 40, 1),
+(37, 9, 'A7', 'Teori', 'Tuesday', '08:41:00.000000', '10:21:00.000000', 3, 14, 40, 0),
 (38, 9, 'A8', 'Teori', 'Tuesday', '10:22:00.000000', '12:02:00.000000', 3, 14, 40, 0),
 (39, 6, 'A3', 'Teori', 'Tuesday', '13:00:00.000000', '15:30:00.000000', 1, 4, 40, 0),
 (40, 10, 'A10', 'Teori', 'Tuesday', '13:00:00.000000', '15:30:00.000000', 5, 11, 40, 0),
 (41, 7, 'A8', 'Teori', 'Tuesday', '13:00:00.000000', '15:30:00.000000', 12, 3, 40, 0),
-(42, 7, 'A4', 'Teori', 'Tuesday', '13:00:00.000000', '15:30:00.000000', 6, 5, 40, 0);
+(42, 7, 'A4', 'Teori', 'Tuesday', '13:00:00.000000', '15:30:00.000000', 6, 5, 40, 0),
+(45, 6, 'A10', 'Teori', 'Tuesday', '15:31:00.000000', '18:01:00.000000', 1, 4, 40, -1),
+(46, 4, 'A2', 'Teori', 'Saturday', '15:31:00.000000', '18:01:00.000000', 5, 3, 40, 0),
+(47, 4, 'A3', 'Teori', 'Thursday', '15:31:00.000000', '18:01:00.000000', 17, 3, 40, -1),
+(48, 4, 'A4', 'Teori', 'Thursday', '07:00:00.000000', '09:30:00.000000', 1, 3, 40, -1),
+(49, 5, 'A6', 'Praktik', 'Thursday', '14:25:00.000000', '15:15:00.000000', 9, 4, 40, -1),
+(50, 6, 'A2', 'Teori', 'Thursday', '07:00:00.000000', '09:30:00.000000', 17, 4, 40, -1);
 
 -- --------------------------------------------------------
 
@@ -144,14 +136,8 @@ CREATE TABLE `krs` (
 --
 
 INSERT INTO `krs` (`id_krs`, `id_mahasiswa`, `id_kelas`, `status_krs`, `waktu_ditambahkan`) VALUES
-(146, 2, 37, 'Belum_disetujui', '2025-01-14 07:59:43'),
-(149, 2, 25, 'Belum_disetujui', '2025-01-14 08:01:10'),
-(150, 2, 32, 'Belum_disetujui', '2025-01-14 08:01:10'),
-(151, 1, 15, 'Belum_disetujui', '2025-01-14 09:48:18'),
-(152, 1, 16, 'Belum_disetujui', '2025-01-14 09:48:18'),
-(153, 1, 25, 'Belum_disetujui', '2025-01-14 09:48:23'),
-(154, 1, 32, 'Belum_disetujui', '2025-01-14 09:48:23'),
-(155, 1, 34, 'Belum_disetujui', '2025-01-14 09:48:48');
+(199, 2, 46, 'Belum_disetujui', '2025-01-26 00:40:09'),
+(200, 2, 27, 'Belum_disetujui', '2025-01-26 00:40:09');
 
 -- --------------------------------------------------------
 
@@ -177,7 +163,8 @@ CREATE TABLE `log_pindah_ruangan` (
 --
 
 INSERT INTO `log_pindah_ruangan` (`id_log`, `id_kelas`, `id_ruangan_awal`, `id_ruangan_baru`, `waktu_pindah`, `hari_baru`, `jadwal_mulai_baru`, `jadwal_selesai_baru`, `alasan`, `status`) VALUES
-(7, 15, 1, 4, '2025-01-14 14:00:00', 'Tuesday', '15:00:00', '21:01:00', 'Pemindahan ruangan dan hari', 'expired');
+(10, 16, 2, 4, '2025-01-25 18:00:09', 'Friday', '14:45:00', '15:45:00', 'Pemindahan ruangan dan hari', 'valid'),
+(11, 15, 1, 7, '2025-01-25 18:00:21', 'Tuesday', '15:00:00', '15:07:00', 'Pemindahan ruangan dan hari', 'valid');
 
 -- --------------------------------------------------------
 
@@ -200,45 +187,6 @@ CREATE TABLE `mahasiswa` (
 INSERT INTO `mahasiswa` (`id_mahasiswa`, `nama_mahasiswa`, `nim`, `jurusan`, `semester`) VALUES
 (1, 'vijjay novaldi', '230401116', 'teknik informatika', 3),
 (2, 'Andre Putra Melky.p', '230401124', 'teknik informatika', 3);
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `mahasiswa_kelas`
---
-
-CREATE TABLE `mahasiswa_kelas` (
-  `id_mahasiswa` int(11) NOT NULL,
-  `id_kelas` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Trigger `mahasiswa_kelas`
---
-DELIMITER $$
-CREATE TRIGGER `update_peserta` AFTER INSERT ON `mahasiswa_kelas` FOR EACH ROW BEGIN
-    UPDATE kelas
-    SET peserta = (
-        SELECT COUNT(*)
-        FROM mahasiswa_kelas
-        WHERE id_kelas = NEW.id_kelas
-    )
-    WHERE id_kelas = NEW.id_kelas;
-END
-$$
-DELIMITER ;
-DELIMITER $$
-CREATE TRIGGER `update_peserta_after_delete` AFTER DELETE ON `mahasiswa_kelas` FOR EACH ROW BEGIN
-    UPDATE kelas
-    SET peserta = (
-        SELECT COUNT(*)
-        FROM mahasiswa_kelas
-        WHERE id_kelas = OLD.id_kelas
-    )
-    WHERE id_kelas = OLD.id_kelas;
-END
-$$
-DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -342,22 +290,8 @@ INSERT INTO `ruangan` (`id_ruangan`, `nama_ruangan`, `kapasitas`, `lokasi`) VALU
 (13, 'RA 41', 40, 'RA'),
 (14, 'RA 42', 40, 'RA'),
 (15, 'RA 44', 40, 'RA'),
-(16, 'RA 45', 40, 'RA');
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `semester`
---
-
-CREATE TABLE `semester` (
-  `id` int(11) NOT NULL,
-  `nama_semester` varchar(20) NOT NULL,
-  `tahun_akademik` varchar(10) NOT NULL,
-  `tanggal_mulai` date DEFAULT NULL,
-  `tanggal_selesai` date DEFAULT NULL,
-  `status` enum('aktif','nonaktif') DEFAULT 'nonaktif'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+(16, 'RA 45', 40, 'RA'),
+(17, 'GR 701', 40, 'GR');
 
 -- --------------------------------------------------------
 
@@ -367,15 +301,15 @@ CREATE TABLE `semester` (
 
 CREATE TABLE `users` (
   `id_user` int(11) NOT NULL,
-  `username` varchar(255) NOT NULL,
+  `username` varchar(50) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `role` varchar(50) DEFAULT NULL CHECK (`role` in ('Mahasiswa','Dosen')),
+  `email` varchar(100) DEFAULT NULL,
+  `role` enum('admin','user','dosen','mahasiswa') DEFAULT 'user',
   `id_mahasiswa` int(11) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `last_login` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `last_login` timestamp NULL DEFAULT NULL,
   `id_dosen` int(11) DEFAULT NULL,
-  `nomor_hp` varchar(15) NOT NULL
+  `nomor_hp` varchar(15) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -383,9 +317,11 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id_user`, `username`, `password`, `email`, `role`, `id_mahasiswa`, `created_at`, `last_login`, `id_dosen`, `nomor_hp`) VALUES
-(1, 'vijjay', '$2y$10$Xp.eDDWwx2gNqTvhNLOJeepq89RwzlMza4K1t6rQl3chhyAQ2Bh9S', '', 'mahasiswa', 1, '2024-11-02 10:18:45', '2025-01-13 15:56:08', NULL, '+62895602591914'),
-(4, 'andre', '$2y$10$4fToldiEZEYfRHmTmt27YOh8wKJ6GcbJnrAX8vCkxBXrOUPhY.0Le', '', 'mahasiswa', 2, '2024-11-02 10:20:03', '2025-01-13 15:55:02', NULL, ''),
-(5, 'dosen', '$2y$10$QMdmiDmHmctm9p0V6EfsZOd27Dzt.PnKIAdjXWbgirhdooBPnVxc2', '', 'dosen', NULL, '2024-12-28 14:43:01', '2024-12-28 14:52:43', 8, '');
+(1, 'vijjay', '$2y$10$Xp.eDDWwx2gNqTvhNLOJeepq89RwzlMza4K1t6rQl3chhyAQ2Bh9S', NULL, 'mahasiswa', 1, '2024-11-02 03:18:45', '2025-01-13 08:56:08', NULL, '+62895602591914'),
+(4, 'andre', '$2y$10$4fToldiEZEYfRHmTmt27YOh8wKJ6GcbJnrAX8vCkxBXrOUPhY.0Le', NULL, 'mahasiswa', 2, '2024-11-02 03:20:03', '2025-01-13 08:55:02', NULL, ''),
+(5, 'dosen', '$2y$10$QMdmiDmHmctm9p0V6EfsZOd27Dzt.PnKIAdjXWbgirhdooBPnVxc2', NULL, 'dosen', NULL, '2024-12-28 07:43:01', '2024-12-28 07:52:43', 8, ''),
+(6, 'kelompok7', '$2y$10$BUyUbDfrmMNnyemkbmpmq.0r1NvPQ.8i3sDP/uxSHvEHo3sw1EG7G', NULL, 'mahasiswa', 2, '2025-01-26 01:28:26', '2025-01-26 01:28:26', NULL, ''),
+(7, 'kelompok9', '$2y$10$PXLKid6RQJwlXKKB6VDOGuXprqCYt6eCk1IeN4fTfvllpZ0p5bhVW', NULL, 'mahasiswa', 1, '2025-01-26 01:30:05', '2025-01-26 01:30:05', NULL, '');
 
 --
 -- Indexes for dumped tables
@@ -397,13 +333,6 @@ INSERT INTO `users` (`id_user`, `username`, `password`, `email`, `role`, `id_mah
 ALTER TABLE `dosen`
   ADD PRIMARY KEY (`id_dosen`),
   ADD UNIQUE KEY `nip` (`nip`);
-
---
--- Indeks untuk tabel `jadwal_kosong`
---
-ALTER TABLE `jadwal_kosong`
-  ADD PRIMARY KEY (`id_jadwal_kosong`),
-  ADD KEY `id_ruangan` (`id_ruangan`);
 
 --
 -- Indeks untuk tabel `kelas`
@@ -439,13 +368,6 @@ ALTER TABLE `mahasiswa`
   ADD UNIQUE KEY `nim` (`nim`);
 
 --
--- Indeks untuk tabel `mahasiswa_kelas`
---
-ALTER TABLE `mahasiswa_kelas`
-  ADD PRIMARY KEY (`id_mahasiswa`,`id_kelas`),
-  ADD KEY `id_kelas` (`id_kelas`);
-
---
 -- Indeks untuk tabel `mata_kuliah`
 --
 ALTER TABLE `mata_kuliah`
@@ -473,19 +395,14 @@ ALTER TABLE `ruangan`
   ADD PRIMARY KEY (`id_ruangan`);
 
 --
--- Indeks untuk tabel `semester`
---
-ALTER TABLE `semester`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indeks untuk tabel `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id_user`),
-  ADD UNIQUE KEY `username` (`username`),
-  ADD KEY `id_entity` (`id_mahasiswa`),
-  ADD KEY `fk_user_dosen` (`id_dosen`);
+  ADD UNIQUE KEY `email` (`email`),
+  ADD UNIQUE KEY `email_2` (`email`),
+  ADD KEY `fk_mahasiswa` (`id_mahasiswa`),
+  ADD KEY `fk_dosen` (`id_dosen`);
 
 --
 -- AUTO_INCREMENT untuk tabel yang dibuang
@@ -501,19 +418,19 @@ ALTER TABLE `dosen`
 -- AUTO_INCREMENT untuk tabel `kelas`
 --
 ALTER TABLE `kelas`
-  MODIFY `id_kelas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `id_kelas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- AUTO_INCREMENT untuk tabel `krs`
 --
 ALTER TABLE `krs`
-  MODIFY `id_krs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=156;
+  MODIFY `id_krs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=201;
 
 --
 -- AUTO_INCREMENT untuk tabel `log_pindah_ruangan`
 --
 ALTER TABLE `log_pindah_ruangan`
-  MODIFY `id_log` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_log` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT untuk tabel `mahasiswa`
@@ -543,29 +460,17 @@ ALTER TABLE `relasi_mata_kuliah`
 -- AUTO_INCREMENT untuk tabel `ruangan`
 --
 ALTER TABLE `ruangan`
-  MODIFY `id_ruangan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
-
---
--- AUTO_INCREMENT untuk tabel `semester`
---
-ALTER TABLE `semester`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_ruangan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT untuk tabel `users`
 --
 ALTER TABLE `users`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
 --
-
---
--- Ketidakleluasaan untuk tabel `jadwal_kosong`
---
-ALTER TABLE `jadwal_kosong`
-  ADD CONSTRAINT `jadwal_kosong_ibfk_1` FOREIGN KEY (`id_ruangan`) REFERENCES `ruangan` (`id_ruangan`);
 
 --
 -- Ketidakleluasaan untuk tabel `kelas`
@@ -591,12 +496,6 @@ ALTER TABLE `log_pindah_ruangan`
   ADD CONSTRAINT `log_pindah_ruangan_ibfk_3` FOREIGN KEY (`id_ruangan_baru`) REFERENCES `ruangan` (`id_ruangan`);
 
 --
--- Ketidakleluasaan untuk tabel `mahasiswa_kelas`
---
-ALTER TABLE `mahasiswa_kelas`
-  ADD CONSTRAINT `mahasiswa_kelas_ibfk_1` FOREIGN KEY (`id_kelas`) REFERENCES `kelas` (`id_kelas`);
-
---
 -- Ketidakleluasaan untuk tabel `relasi_mata_kuliah`
 --
 ALTER TABLE `relasi_mata_kuliah`
@@ -607,8 +506,8 @@ ALTER TABLE `relasi_mata_kuliah`
 -- Ketidakleluasaan untuk tabel `users`
 --
 ALTER TABLE `users`
-  ADD CONSTRAINT `fk_user_dosen` FOREIGN KEY (`id_dosen`) REFERENCES `dosen` (`id_dosen`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`id_mahasiswa`) REFERENCES `mahasiswa` (`id_mahasiswa`);
+  ADD CONSTRAINT `fk_dosen` FOREIGN KEY (`id_dosen`) REFERENCES `dosen` (`id_dosen`) ON DELETE SET NULL ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_mahasiswa` FOREIGN KEY (`id_mahasiswa`) REFERENCES `mahasiswa` (`id_mahasiswa`) ON DELETE SET NULL ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
